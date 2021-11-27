@@ -16,9 +16,6 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.use("/", index)
-app.use("/doctors", doctors)
-
 app.options("/*", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers")
@@ -28,6 +25,8 @@ app.options("/*", (req, res) => {
     );
     res.send("send some thing whatever")
 })
+app.use("/", index)
+app.use("/doctors", doctors)
 
 module.exports = {app}
 

@@ -15,7 +15,10 @@ const getAllDoctors = async (req, res) => {
     const favorite = req.query.favorite
     try {
         const where = favorite ? { where: { favorite } } : {}
-        const doctors = await Doctor.findAll(where)
+        const doctors = await Doctor.findAll({where, 
+            order:[['id', 'ASC']]
+        });
+
         if (doctors && doctors.length > 0) {
             res.status(200).send(doctors)
         } else {
@@ -58,9 +61,39 @@ const updateDoctor = async (req, res) => {
     }
 }
 
+const updateFavorite = async (req, res) => {
+    const doctorId = req.params.id
+    const favorite = req.body.favorite
+    try {
+        const rowsUpdated = await Doctor.update({ favorite }, { where: { id: doctorId } });
+        if (rowsUpdated && rowsUpdated > 0) {
+            res.status(200).send({ message: `${rowsUpdated[0]} medico(s) com informação de favorito atualizada com sucesso` })
+        } else {
+            res.status(404).send({ message: `Medico com id ${doctorId} não encontrado para atualizar informação de favorito` })
+        }
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+}
+
+const deleteDoctor = async (req, res) => {
+    const doctorId = req.params.id
+    try {
+        const rowsDeleted = await Doctor.destroy({ where: { id: doctorId } });
+        if (rowsDeleted) {
+            res.status(200).send({ message: `${rowsDeleted[0]} medico(s) deletado(s) com sucesso` })
+        } else {
+            res.status(404).send({ message: `Medico com id ${doctorId} não encontrado para deletar` })
+        }
+    } catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+}
 module.exports = {
     createDoctor,
     getAllDoctors,
     getDoctor,
     updateDoctor,
+    updateFavorite,
+    deleteDoctor,
 }
