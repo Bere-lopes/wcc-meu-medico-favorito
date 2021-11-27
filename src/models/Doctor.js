@@ -1,6 +1,7 @@
-const {Sequelize, DataTypes} = require('sequilize');
+const {Sequelize, DataTypes} = require("sequelize");
 const { database } = require("../db")
-const Doctor = database.define('Doctor', {
+
+const Doctor = database.define("Doctor", {
     id:  {
         type: DataTypes.BIGINT,
         autoIncrement: true,
@@ -23,10 +24,11 @@ const Doctor = database.define('Doctor', {
         type: DataTypes.STRING
     },
     favorite:  {
-        type: DataTypes.BOLLEAN
+        type: DataTypes.BOOLEAN
     }    
 });
-Doctor.sync()
+
+Doctor.sync();
 
 module.exports = Doctor;
     

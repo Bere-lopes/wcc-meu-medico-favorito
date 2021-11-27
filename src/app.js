@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 
-const index = require("./routes/index")
 const doctors = require("./routes/doctors")
+const index = require("./routes/index")
 
-app.use(express.json())
+app.use(express.json());
+
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")

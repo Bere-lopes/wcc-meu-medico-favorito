@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const controller = require("../controllers/doctorContreller")
+const controller = require("../controllers/doctorController")
 
 router.post("/", controller.createDoctor)
-router.get("/", controller.getAllDoctor)
+router.get("/", controller.getAllDoctors)
+router.get("/:id", controller.getDoctor)
+router.put("/", controller.updateDoctor )
 
-
-module.exports = router;
+module.exports = router
